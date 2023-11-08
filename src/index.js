@@ -49,7 +49,7 @@ function CheckObjectExist(client, bucket, key) {
  * @param {string} filePath
  */
 async function uploadFile(client, option, key, filePath) {
-  if (ignoreExist) {
+  if (option.ignoreExist) {
     const flag = await CheckObjectExist(client, option.Bucket, key);
     if (flag) return;
   }
