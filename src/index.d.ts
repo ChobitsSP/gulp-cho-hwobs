@@ -2,10 +2,11 @@ interface MyOptions {
   access_key_id: string;
   secret_access_key: string;
   server: string;
-  bucketName: string;
+
+  Bucket: string;
+  ACL?: string;
 
   prefix?: string;
-
   /** 是否跳过已经存在的文件 */
   ignoreExist?: boolean;
 }

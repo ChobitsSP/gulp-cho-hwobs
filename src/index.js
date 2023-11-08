@@ -44,20 +44,21 @@ function CheckObjectExist(client, bucket, key) {
 /**
  * 上传
  * @param {HwObsClient} client
- * @param {string} bucket
+ * @param {MyOptions} option
  * @param {string} key
  * @param {string} filePath
  */
-async function uploadFile(client, bucket, key, filePath, ignoreExist = true) {
+async function uploadFile(client, option, key, filePath) {
   if (ignoreExist) {
-    const flag = await CheckObjectExist(client, bucket, key);
+    const flag = await CheckObjectExist(client, option.Bucket, key);
     if (flag) return;
   }
   return new Promise(function (resolve, reject) {
     client.putObject({
       Key: key,
-      Bucket: bucket,
+      Bucket: option.Bucket,
       SourceFile: filePath,
+      ACL: option.ACL,
     }, function (err, result) {
       if (err) {
         reject(err);
@@ -75,7 +76,11 @@ async function uploadFile(client, bucket, key, filePath, ignoreExist = true) {
  */
 function main(option) {
   /** @type{HwObsClient} */
-  const client = new ObsClient(option);
+  const client = new ObsClient({
+    access_key_id: option.access_key_id,
+    secret_access_key: option.secret_access_key,
+    server: option.server,
+  });
 
   return through.obj(
     /**
@@ -87,7 +92,7 @@ function main(option) {
     function (file, enc, cb) {
       if (file.isBuffer()) {
         const ossPath = getFileKey(file, option.prefix);
-        uploadFile(client, option.bucketName, ossPath, file.path, option.ignoreExist)
+        uploadFile(client, option, ossPath, file.path)
           .then(function () {
             cb(null, file);
           })
