@@ -31,6 +31,12 @@ interface PutObjectOptions {
   Key: string;
   /** 待上传的本地文件路径，需要指定到具体的文件名 */
   SourceFile: string;
+  /** 
+   * 创建对象时，可以加上此消息头设置对象的权限控制策略，使用的策略为预定义的常用策略，
+   * 包括：private；public-read；public-read-write
+   * （各策略详细说明见ACL章节的“使用头域设置ACL”）。 
+   */
+  ACL?: string;
 }
 
 interface TopResult {
