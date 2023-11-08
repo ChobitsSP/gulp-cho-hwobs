@@ -1,0 +1,28 @@
+{
+  "name": "gulp-cho-hwobs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChobitsSP/gulp-cho-hwobs.git"
+  },
+  "keywords": [
+    "gulpplugin"
+  ],
+  "author": "Chobits",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ChobitsSP/gulp-cho-hwobs/issues"
+  },
+  "homepage": "https://github.com/ChobitsSP/gulp-cho-hwobs#readme",
+  "dependencies": {
+    "esdk-obs-nodejs": "^3.23.9"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2"
+  }
+}
