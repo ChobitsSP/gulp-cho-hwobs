@@ -18,12 +18,12 @@ interface HwObsClient {
    * @param options 
    * @param callback 
    */
-  putObject(options: PutObjectOptions, callback: (err: any, result: PutObjectResult) => void): void;
+  putObject(options: PutObjectOptions, callback: (err: any, result: TopResult) => void): void;
 
   getObjectMetadata(options: {
     Bucket: string;
     Key: string;
-  }, callback: (err: any, result: any) => void): void;
+  }, callback: (err: any, result: TopResult) => void): void;
 }
 
 interface PutObjectOptions {
@@ -33,7 +33,7 @@ interface PutObjectOptions {
   SourceFile: string;
 }
 
-interface PutObjectResult {
+interface TopResult {
   CommonMsg: {
     Status: number;
   }
@@ -43,18 +43,6 @@ interface PutObjectResult {
     Metadata: any;
   }
 }
-
-// obsClient.putObject({
-//   Bucket : 'bucketname',
-//   Key : 'objectname',
-//   SourceFile : 'localfile'  // localfile为待上传的本地文件路径，需要指定到具体的文件名
-// }, (err, result) => {
-//   if(err){
-//          console.error('Error-->' + err);
-//   }else{
-//          console.log('Status-->' + result.CommonMsg.Status);
-//   }
-// });
 
 interface MyFile {
   path: string;

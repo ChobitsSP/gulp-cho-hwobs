@@ -35,7 +35,7 @@ function CheckObjectExist(client, bucket, key) {
       if (err) {
         resolve(false);
       } else {
-        resolve(true);
+        resolve(result.CommonMsg.Status === 200);
       }
     });
   });
