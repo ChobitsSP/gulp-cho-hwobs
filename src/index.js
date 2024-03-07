@@ -76,11 +76,7 @@ async function uploadFile(client, option, key, filePath) {
  */
 function main(option) {
   /** @type{HwObsClient} */
-  const client = new ObsClient({
-    access_key_id: option.access_key_id,
-    secret_access_key: option.secret_access_key,
-    server: option.server,
-  });
+  const client = new ObsClient(option);
 
   return through.obj(
     /**
