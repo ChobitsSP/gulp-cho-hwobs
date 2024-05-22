@@ -19,12 +19,12 @@ interface HwObsClient {
    * @param options 
    * @param callback 
    */
-  putObject(options: PutObjectOptions, callback: (err: any, result: TopResult) => void): void;
+  putObject(options: PutObjectOptions): Promise<TopResult>;
 
   getObjectMetadata(options: {
     Bucket: string;
     Key: string;
-  }, callback: (err: any, result: TopResult) => void): void;
+  }): Promise<TopResult>;
 }
 
 interface PutObjectOptions {

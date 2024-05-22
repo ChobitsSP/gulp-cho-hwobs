@@ -24,20 +24,13 @@ function getFileKey(file, prefix) {
  * @param {HwObsClient} client 
  * @param {string} bucket 
  * @param {string} key 
- * @returns {Promise<boolean>}
  */
 function CheckObjectExist(client, bucket, key) {
-  return new Promise(function (resolve) {
-    client.getObjectMetadata({
-      Key: key,
-      Bucket: bucket,
-    }, function (err, result) {
-      if (err) {
-        resolve(false);
-      } else {
-        resolve(result.CommonMsg.Status === 200);
-      }
-    });
+  return client.getObjectMetadata({
+    Key: key,
+    Bucket: bucket,
+  }).then(function (result) {
+    return result.CommonMsg.Status === 200;
   });
 }
 
@@ -70,23 +63,14 @@ async function uploadFile(client, option, key, filePath) {
     const flag = await CheckObjectExist(client, option.Bucket, key);
     if (flag) return;
   }
-  return new Promise(function (resolve, reject) {
-    let Metadata = {};
 
-    client.putObject({
-      Key: key,
-      Bucket: option.Bucket,
-      SourceFile: filePath,
-      ACL: option.ACL,
-      Metadata,
-      ContentType,
-    }, function (err, result) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(result);
-      }
-    });
+  return client.putObject({
+    Key: key,
+    Bucket: option.Bucket,
+    SourceFile: filePath,
+    ACL: option.ACL,
+    Metadata,
+    ContentType,
   });
 }
 
