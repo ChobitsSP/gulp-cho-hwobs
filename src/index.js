@@ -55,6 +55,9 @@ async function uploadFile(client, option, key, filePath) {
     else if (/\.css$/i.test(key)) {
       ContentConfig['ContentType'] = 'text/css';
     }
+    else if (/\.html$/i.test(key)) {
+      ContentConfig['ContentType'] = 'text/html';
+    }
   }
 
   if (option.ignoreExist) {
