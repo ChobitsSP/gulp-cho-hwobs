@@ -49,16 +49,28 @@ function CheckObjectExist(client, bucket, key) {
  * @param {string} filePath
  */
 async function uploadFile(client, option, key, filePath) {
+  let Metadata = {};
+
+  if (/\.gz$/i.test(key)) {
+    key = key.replace(/\.gz$/i, '');
+    Metadata = {
+      'ContentEncoding': 'gzip',
+    };
+  }
+
   if (option.ignoreExist) {
     const flag = await CheckObjectExist(client, option.Bucket, key);
     if (flag) return;
   }
   return new Promise(function (resolve, reject) {
+    let Metadata = {};
+
     client.putObject({
       Key: key,
       Bucket: option.Bucket,
       SourceFile: filePath,
       ACL: option.ACL,
+      Metadata,
     }, function (err, result) {
       if (err) {
         reject(err);
