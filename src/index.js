@@ -56,6 +56,12 @@ async function uploadFile(client, option, key, filePath) {
     Metadata = {
       'ContentEncoding': 'gzip',
     };
+    if (/\.js$/i.test(key)) {
+      Metadata['ContentType'] = 'application/javascript';
+    }
+    if (/\.css$/i.test(key)) {
+      Metadata['ContentType'] = 'text/css';
+    }
   }
 
   if (option.ignoreExist) {
