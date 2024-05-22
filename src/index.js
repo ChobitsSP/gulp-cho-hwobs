@@ -48,6 +48,7 @@ async function uploadFile(client, option, key, filePath) {
   if (/\.gz$/i.test(key)) {
     key = key.replace(/\.gz$/i, '');
     ContentConfig['ContentEncoding'] = 'gzip';
+    // ContentConfig['ContentLength'] = fs.statSync(filePath).size;
     if (/\.js$/i.test(key)) {
       ContentConfig['ContentType'] = 'application/javascript';
     }
