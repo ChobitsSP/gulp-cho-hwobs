@@ -42,20 +42,16 @@ function CheckObjectExist(client, bucket, key) {
  * @param {string} filePath
  */
 async function uploadFile(client, option, key, filePath) {
-  let Metadata = {};
-
-  let ContentType;
+  const Metadata = {};
 
   if (/\.gz$/i.test(key)) {
     key = key.replace(/\.gz$/i, '');
-    Metadata = {
-      'ContentEncoding': 'gzip',
-    };
+    Metadata['ContentEncoding'] = 'gzip';
     if (/\.js$/i.test(key)) {
-      ContentType = 'application/javascript';
+      Metadata['ContentType'] = 'application/javascript';
     }
-    if (/\.css$/i.test(key)) {
-      ContentType = 'text/css';
+    else if (/\.css$/i.test(key)) {
+      Metadata['ContentType'] = 'text/css';
     }
   }
 
@@ -64,14 +60,13 @@ async function uploadFile(client, option, key, filePath) {
     if (flag) return;
   }
 
-  return client.putObject({
+  return client.putObject(Object.assign(Metadata, {
     Key: key,
     Bucket: option.Bucket,
     SourceFile: filePath,
     ACL: option.ACL,
     Metadata,
-    ContentType,
-  });
+  }));
 }
 
 /**
