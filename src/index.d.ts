@@ -38,6 +38,16 @@ interface PutObjectOptions {
    * （各策略详细说明见ACL章节的“使用头域设置ACL”）。 
    */
   ACL?: string;
+
+  /**
+   * 上传对象时，可以加上此消息头设置对象的MIME类型，MIME类型是标准的互联网媒体类型。
+   */
+  ContentType?: string;
+
+  /**
+   * 上传对象时，可以加上此消息头设置对象的元数据，元数据是一组键值对，键值对的键和值都是字符串。
+   */
+  Metadata?: Record<string, string>;
 }
 
 interface TopResult {
