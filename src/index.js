@@ -36,22 +36,23 @@ function CheckObjectExist(client, bucket, key) {
 
 /**
  * 上传
+ * https://github.com/huaweicloud/huaweicloud-sdk-nodejs-obs/issues/3
  * @param {HwObsClient} client
  * @param {MyOptions} option
  * @param {string} key
  * @param {string} filePath
  */
 async function uploadFile(client, option, key, filePath) {
-  const Metadata = {};
+  const ContentConfig = {};
 
   if (/\.gz$/i.test(key)) {
     key = key.replace(/\.gz$/i, '');
-    Metadata['ContentEncoding'] = 'gzip';
+    ContentConfig['ContentEncoding'] = 'gzip';
     if (/\.js$/i.test(key)) {
-      Metadata['ContentType'] = 'application/javascript';
+      ContentConfig['ContentType'] = 'application/javascript';
     }
     else if (/\.css$/i.test(key)) {
-      Metadata['ContentType'] = 'text/css';
+      ContentConfig['ContentType'] = 'text/css';
     }
   }
 
@@ -60,13 +61,12 @@ async function uploadFile(client, option, key, filePath) {
     if (flag) return;
   }
 
-  return client.putObject(Object.assign(Metadata, {
+  return client.putObject(Object.assign({
     Key: key,
     Bucket: option.Bucket,
     SourceFile: filePath,
     ACL: option.ACL,
-    Metadata,
-  }));
+  }, ContentConfig));
 }
 
 /**
