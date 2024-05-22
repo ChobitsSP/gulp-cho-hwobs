@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/ChobitsSP/gulp-cho-hwobs#readme",
   "dependencies": {
-    "esdk-obs-nodejs": "^3.23.9"
+    "esdk-obs-nodejs": "^3.24.3"
   },
   "devDependencies": {
     "gulp": "^4.0.2"
