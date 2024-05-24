@@ -31,3 +31,37 @@ gulp.task("test", () => {
   );
 });
 ```
+
+gzip
+
+```javascript
+const gulp = require("gulp");
+const gzip = require("gulp-gzip");
+
+const through2 = require("through2");
+const fs = require("fs");
+const del = require("del");
+
+gulp.task("gzip", function () {
+  return gulp
+    .src(["./dist/**/*.js", "./dist/**/*.css"])
+    .pipe(gzip({ threshold: "10kb" }))
+    .pipe(gulp.dest("./dist"));
+});
+
+gulp.task("gzip-clean", function () {
+  return gulp.src("./dist/**/*.gz").pipe(
+    through2.obj(function (file, enc, cb) {
+      const originalFilePath = file.path.replace(/\.gz$/, "");
+
+      fs.access(originalFilePath, fs.constants.F_OK, (err) => {
+        if (!err) {
+          del(originalFilePath).then(() => cb(null, file));
+        } else {
+          cb(null, file);
+        }
+      });
+    })
+  );
+});
+```
